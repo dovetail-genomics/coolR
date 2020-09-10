@@ -4,7 +4,7 @@
 \alias{getBins}
 \title{Accessing the genomic bins in a cool/mcool file}
 \usage{
-getBins(file, res)
+getBins(file, res = NULL)
 }
 \arguments{
 \item{file}{Path to a HDF5 stored cool (uni-dimension) or mcool (multi-dimension sparse matrix).

@@ -11,7 +11,7 @@
 #' @examples
 #' 
 #' @export
-seqinfo.cool <- function(file,res){
+seqinfo.cool <- function(file,res = NULL){
     chr.group <- ifelse(is.null(res),'/chroms',paste('resolutions',res,'chroms',sep='/'))
     s.i <- Seqinfo(seqnames = as.vector(h5read(file,paste(chr.group,'name',sep="/"))),
                    seqlengths = as.vector(h5read(file,paste(chr.group,'length',sep="/"))))
@@ -29,7 +29,7 @@ seqinfo.cool <- function(file,res){
 #' @examples
 #' 
 #' @export
-getBins <- function(file,res){
+getBins <- function(file,res = NULL){
     bins.group <- ifelse(is.null(res),'/bins',paste('resolutions',res,'bins',sep='/'))
     
     s.i <- seqinfo.cool(file,res)
@@ -148,7 +148,7 @@ gi2is <- function(gi.counts,col.names) {
 }
 
 
-#' Read .cool/.mcool sparse matrix into a GInteractions
+#' Read .cool/.mcool sparse matrix into a GInteractions Object
 #'
 #' This function reads a compressed sparse row (CSR) storage scheme for a matrix
 #' created by the cooler application (https://github.com/mirnylab/cooler) stored in a

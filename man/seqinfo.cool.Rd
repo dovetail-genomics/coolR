@@ -4,7 +4,7 @@
 \alias{seqinfo.cool}
 \title{Accessing the sequence information in a cool/mcool file}
 \usage{
-seqinfo.cool(file, res)
+seqinfo.cool(file, res = NULL)
 }
 \arguments{
 \item{file}{Path to a HDF5 stored cool (uni-dimension) or mcool (multi-dimension sparse matrix).

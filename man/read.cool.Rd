@@ -2,7 +2,7 @@
 % Please edit documentation in R/coolR.R
 \name{read.cool}
 \alias{read.cool}
-\title{Read .cool/.mcool sparse matrix into a GInteractions}
+\title{Read .cool/.mcool sparse matrix into a GInteractions Object}
 \usage{
 read.cool(
   file,
