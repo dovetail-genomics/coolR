@@ -190,7 +190,12 @@ read.cool <- function(file,res=NULL,chr1=NULL,start1=NULL,end1=NULL,chr2=NULL,st
 }
 
 
-#'  Read .cool/.mcool sparse matrix into a GInteractions
+#'  Read .cool/.mcool sparse matrix into a InteractionSet object
+#'
+#' This function reads HiC contact matrix file(s) created by the 
+#' cooler application (https://github.com/mirnylab/cooler) stored in a
+#' HDF5 data storage and converts them to an InteractionSet object for all
+#' detected pair of genomic bins with the counts of reads in these bin pairs
 #' 
 #' @param files A character vector of paths to HDF5 stored cool (uni-dimension)
 #' or mcool (multi-dimension sparse matrix). If using a multi-dimesion,
