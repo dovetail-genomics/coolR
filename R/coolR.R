@@ -12,9 +12,12 @@
 #' 
 #' @export
 seqinfo.cool <- function(file,res = NULL){
+
     chr.group <- ifelse(is.null(res),'/chroms',paste('resolutions',res,'chroms',sep='/'))
+
     s.i <- Seqinfo(seqnames = as.vector(h5read(file,paste(chr.group,'name',sep="/"))),
                    seqlengths = as.vector(h5read(file,paste(chr.group,'length',sep="/"))))
+
 }
 
 #' Accessing the genomic bins in a cool/mcool file
@@ -30,6 +33,7 @@ seqinfo.cool <- function(file,res = NULL){
 #' 
 #' @export
 getBins <- function(file,res = NULL){
+
     bins.group <- ifelse(is.null(res),'/bins',paste('resolutions',res,'bins',sep='/'))
     
     s.i <- seqinfo.cool(file,res)
@@ -79,6 +83,7 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
         slice <- sum(bin1.idx[-1] - bin1.idx[-length(bin1.idx)])-1
         
         chunk  <- seq(bin1.idx[1]+1,bin1.idx[1]+1+slice)
+
     }
 
     ################################################################################
@@ -86,10 +91,10 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     ################################################################################
     d.f <- data.frame(bin1_id = as.vector(h5read(file,
                                                  paste(pixels.group,'bin1_id',sep="/"),
-                                                 index=list(chunk))),
+                                                 index=list(chunk)))+1,
                       bin2_id = as.vector(h5read(file,
                                                  paste(pixels.group,'bin2_id',sep="/"),
-                                                 index=list(chunk))),
+                                                 index=list(chunk)))+1,
                       count = as.vector(h5read(file,
                                                paste(pixels.group,'count',sep="/"),
                                                index=list(chunk)))
