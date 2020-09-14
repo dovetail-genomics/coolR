@@ -39,7 +39,8 @@ getBins <- function(file,res = NULL){
     s.i <- seqinfo.cool(file,res)
     
     a.chr <- h5read(file,paste(bins.group,'chrom',sep="/"))
-    a.start <- h5read(file,paste(bins.group,'start',sep="/"))+1
+    a.start <- h5read(file,paste(bins.group,'start',sep="/"))
+    a.start[a.start==0] <- 1
     a.end <- h5read(file,paste(bins.group,'end',sep="/"))
     
     anchors <- GRanges(a.chr,
