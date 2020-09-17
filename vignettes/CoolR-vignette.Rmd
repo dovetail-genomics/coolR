@@ -1,0 +1,46 @@
+---
+title: "CoolR Usage Vignette"
+author: "Dovetail Genomics"
+date: "9/17/2020"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{HiCcompare Usage Vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r set-options, echo=FALSE, cache=FALSE}
+options(width = 400)
+```
+
+# Introduction
+
+`CoolR` provides a lightweight interface to `cool` and `mcool` files using a native HDF5 R interface. You will get same information as provided by using `cooler` program, but the outputs will be provided as R objects that can be used for downstream analysis. 
+
+
+# How to use `CoolR`
+
+## Installation
+
+The best way to install `CoolR` is from Bioconductor.
+
+```{r, eval = FALSE}
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("CoolR")
+library(CoolR)
+```
+
+## Getting Cooler files 
+
+In order to use `CoolR`, you will need the Hi-C interaction matrix stored in either `cool` or `mcool` format. To get a sense of this package, you can start with using the cool file for Omni-C data provided here: (give paths to omnic contact matrix here). Once you have a `cool`/`mcool` files, you are ready do use this package!
+
+## Extracting data from `cool` files
+
+`Cool` files store the data at a single bin size. For our example, the `cool` file has stored the contact matrix at 1000 bp resolution. To read the contact matrix for the entire genome into a `GInteractions` object, you can run following command.
+
+```{r, eval = FALSE}
+contact_matrix_whole_genome <- read.cool("Omni-C_1kb.cool")
+```
