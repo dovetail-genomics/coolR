@@ -44,3 +44,40 @@ In order to use `CoolR`, you will need the Hi-C interaction matrix stored in eit
 ```{r, eval = FALSE}
 contact_matrix_whole_genome <- read.cool("Omni-C_1kb.cool")
 ```
+
+If you want to restrict a contact matrix to both cis and trans interactions originating from a particular chromosome, for example chromosome 21, you can specify that in the `read.cool` function as follows.
+
+```{r, eval = FALSE}
+contact_matrix_chr21_to_all <- read.cool("Omni-C_1kb.cool", chr1="chr21")
+```
+
+If you want to restrict a contact matrix just to cis interaction within a particular chromosome, for example, chromosome 21, you can specify that as follows. 
+
+```{r, eval = FALSE}
+contact_matrix_chr21_chr21 <- read.cool("Omni-C_1kb.cool", chr1="chr21", chr2="chr21")
+```
+
+You can also extract contact matrix for interactions between two chromosomes, for example between chromosome 21 and chromosome 22 as follows. 
+
+```{r, eval = FALSE}
+contact_matrix_chr21_chr22 <- read.cool("Omni-C_1kb.cool", chr1="chr21", chr2="chr22")
+```
+
+If you want to extract contact matrix for a specific region in a chromosome, you can set `start1`and `end1` parameters to restrict region on the first chromosome and `start2` and `end2` parameters to restrict regions on `chr2`. If neither of `start1` or `end1` is set, `start1` is set to 1 and `end1` is set to the length of the first chromosome. If only `start1` is set, then `end1` will be set to the end of the first chromosome. If only `end1` is set, then `start1` will be set to 1. Similar rules apply for the second chromosome, `start2`, and `end2`. These are some example commands to use these options. 
+
+```{r, eval = FALSE}
+contact_matrix_chr21_1_15_mb <- read.cool("Omni-C_1kb.cool", chr1="chr21", start1=1000000, end1=15000000)
+contact_matrix_chr21_1_15_mb_cis_only <- read.cool("Omni-C_1kb.cool", chr1="chr21", start1=1000000, end1=15000000, chr2="chr21", start2=1000000, end2=15000000)
+contact_matrix_chr21_1_15_mb_chr22_1_15_mb <- read.cool("Omni-C_1kb.cool", chr1="chr21", start1=1000000, end1=15000000, chr2="chr22", start2=1000000, end2=15000000)
+```
+
+## Extracting data from `mcool` files
+
+`mcool` files store contact matrix at multiple resolutions. If you want to extract contact matrix at specific resolution from the `mcool` file, you can specify that resolution using `res` option in `read.cool` function as follows.
+
+```{r, eval = FALSE}
+contact_matrix_chr21_16kb <- read.cool("Omni-C.mcool", res=16000,chr1="chr21", chr2="chr22")
+```
+
+This would give us the contact matrix for chromosome 21 at 16 kb resolution from an `mcool` file. The usage of other parameters is exactly same. 
+
