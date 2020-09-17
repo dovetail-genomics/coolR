@@ -71,9 +71,12 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     } else {
         chr1.start <- GRanges(chr1,IRanges(start1,width=1))
         chr1.end <- GRanges(chr1,IRanges(end1,width=1))
-        
-        chr1.start.idx <- subjectHits(findOverlaps(chr1.start,anchors))
-        chr1.end.idx <- subjectHits(findOverlaps(chr1.end,anchors))
+
+        start.bin <- findOverlaps(chr1.start,anchors)
+        end.bin <- findOverlaps(chr1.end,anchors)
+    
+        chr1.start.idx <- subjectHits(start.bin)[1]
+        chr1.end.idx <- subjectHits(end.bin)[length(end.bin)]
         
         idx.chunk <- seq(chr1.start.idx,chr1.end.idx)
 
