@@ -39,8 +39,8 @@ getBins <- function(file,res = NULL){
     s.i <- seqinfo.cool(file,res)
     
     a.chr <- h5read(file,paste(bins.group,'chrom',sep="/"))
-    a.start <- h5read(file,paste(bins.group,'start',sep="/"))
-    a.start[a.start==0] <- 1
+    ## Cooler use open ended starts, we will use close non-overlapping bins
+    a.start <- h5read(file,paste(bins.group,'start',sep="/"))+1
     a.end <- h5read(file,paste(bins.group,'end',sep="/"))
     
     anchors <- GRanges(a.chr,
@@ -71,12 +71,9 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     } else {
         chr1.start <- GRanges(chr1,IRanges(start1,width=1))
         chr1.end <- GRanges(chr1,IRanges(end1,width=1))
-
-        start.bin <- findOverlaps(chr1.start,anchors)
-        end.bin <- findOverlaps(chr1.end,anchors)
     
-        chr1.start.idx <- subjectHits(start.bin)[1]
-        chr1.end.idx <- subjectHits(end.bin)[length(end.bin)]
+        chr1.start.idx <- subjectHits(findOverlaps(chr1.start,anchors))
+        chr1.end.idx <- subjectHits(findOverlaps(chr1.end,anchors))
         
         idx.chunk <- seq(chr1.start.idx,chr1.end.idx)
 
@@ -186,7 +183,7 @@ gi2is <- function(gi.counts,col.names) {
 #' 
 #' @export
 read.cool <- function(file,res=NULL,chr1=NULL,start1=NULL,end1=NULL,chr2=NULL,start2=NULL,end2=NULL) {
-    
+
     anchors <- getBins(file,res)
 
     slice <- getSlice(anchors,file,res,chr1,start1,end1,chr2,start2,end2)
