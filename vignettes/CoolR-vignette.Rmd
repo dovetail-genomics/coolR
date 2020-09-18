@@ -49,6 +49,19 @@ If you want to restrict a contact matrix to both cis and trans interactions orig
 
 ```{r, eval = FALSE}
 contact_matrix_chr21_to_all <- read.cool("Omni-C_1kb.cool", chr1="chr21")
+head(contact_matrix_chr21_to_all)
+Interactions object with 6 interactions and 1 metadata column:
+      seqnames1         ranges1     seqnames2           ranges2 |     count
+          <Rle>       <IRanges>         <Rle>         <IRanges> | <integer>
+  [1]        21 4903000-4904000 ---        21   4903000-4904000 |         2
+  [2]        21 5010000-5011000 ---        21   5015000-5016000 |         2
+  [3]        21 5010000-5011000 ---        21   5031000-5032000 |         2
+  [4]        21 5010000-5011000 ---        21 43723000-43724000 |         2
+  [5]        21 5010000-5011000 ---        21 43847000-43848000 |         2
+  [6]        21 5010000-5011000 ---        21 43998000-43999000 |         2
+  -------
+  regions: 66568 ranges and 0 metadata columns
+  seqinfo: 25 sequences from an unspecified genome
 ```
 
 If you want to restrict a contact matrix just to cis interaction within a particular chromosome, for example, chromosome 21, you can specify that as follows. 
