@@ -15,8 +15,8 @@ seqinfo.cool <- function(file,res = NULL){
 
     chr.group <- ifelse(is.null(res),'/chroms',paste('resolutions',res,'chroms',sep='/'))
 
-    s.i <- Seqinfo(seqnames = as.vector(h5read(file,paste(chr.group,'name',sep="/"))),
-                   seqlengths = as.vector(h5read(file,paste(chr.group,'length',sep="/"))))
+    s.i <- Seqinfo(seqnames = as.vector(h5read(file,name=paste(chr.group,'name',sep="/"))),
+                   seqlengths = as.vector(h5read(file,name=paste(chr.group,'length',sep="/"))))
 
 }
 
@@ -37,15 +37,16 @@ getBins <- function(file,res = NULL){
     bins.group <- ifelse(is.null(res),'/bins',paste('resolutions',res,'bins',sep='/'))
     
     s.i <- seqinfo.cool(file,res)
-    
-    a.chr <- h5read(file,paste(bins.group,'chrom',sep="/"))
+
+    a.chr <- h5read(file,name=paste(bins.group,'chrom',sep="/"))
     ## Cooler use open ended starts, we will use close non-overlapping bins
-    a.start <- h5read(file,paste(bins.group,'start',sep="/"))+1
-    a.end <- h5read(file,paste(bins.group,'end',sep="/"))
+    a.start <- h5read(file,name=paste(bins.group,'start',sep="/"))+1
+    a.end <- h5read(file,name=paste(bins.group,'end',sep="/"))
     
     anchors <- GRanges(a.chr,
                        IRanges(a.start,a.end),
                        seqinfo=s.i)
+
 }
 
 getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
