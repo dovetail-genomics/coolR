@@ -60,9 +60,9 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     chr.group <- ifelse(is.null(res),"/chroms",paste('resolutions',res,'chroms',sep='/'))
     pixels.group <- ifelse(is.null(res),"/pixels",paste('resolutions',res,'pixels',sep='/'))
     
-    indexes <- list(chr=as.vector(h5read(file,paste(chr.group,'name',sep="/"))),
-                    chr_idx=as.vector(h5read(file,paste(indexes.group,'chrom_offset',sep="/"))),
-                    bin1_idx=as.vector(h5read(file,paste(indexes.group,'bin1_offset',sep="/"))))
+    indexes <- list(chr=as.vector(h5read(file,name=paste(chr.group,'name',sep="/"))),
+                    chr_idx=as.vector(h5read(file,name=paste(indexes.group,'chrom_offset',sep="/"))),
+                    bin1_idx=as.vector(h5read(file,name=paste(indexes.group,'bin1_offset',sep="/"))))
     
 ################################################################################
     ## Reading chromosome chunk If chr1 is null, return the full cool file
@@ -79,7 +79,7 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
         idx.chunk <- seq(chr1.start.idx,chr1.end.idx)
 
         bin1.idx <- as.vector(h5read(file,
-                                     paste(indexes.group,'bin1_offset',sep="/"),
+                                     name=paste(indexes.group,'bin1_offset',sep="/"),
                                      index=list(idx.chunk)))
         
         slice <- sum(bin1.idx[-1] - bin1.idx[-length(bin1.idx)])-1
@@ -92,13 +92,13 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     ## Reading the chunks from the cool file
     ################################################################################
     d.f <- data.frame(bin1_id = as.vector(h5read(file,
-                                                 paste(pixels.group,'bin1_id',sep="/"),
+                                                 name=paste(pixels.group,'bin1_id',sep="/"),
                                                  index=list(chunk)))+1,
                       bin2_id = as.vector(h5read(file,
-                                                 paste(pixels.group,'bin2_id',sep="/"),
+                                                 name=paste(pixels.group,'bin2_id',sep="/"),
                                                  index=list(chunk)))+1,
                       count = as.vector(h5read(file,
-                                               paste(pixels.group,'count',sep="/"),
+                                               name=paste(pixels.group,'count',sep="/"),
                                                index=list(chunk)))
                       )
     
