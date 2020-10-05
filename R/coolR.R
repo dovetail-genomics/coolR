@@ -197,16 +197,20 @@ read.cool <- function(file,res=NULL,chr1=NULL,start1=NULL,end1=NULL,chr2=NULL,st
 }
 
 
-#'  Read .cool/.mcool sparse matrix into a InteractionSet object
+#' Read .cool/.mcool sparse matrix into a InteractionSet object
 #'
 #' This function reads HiC contact matrix file(s) created by the 
 #' cooler application (https://github.com/mirnylab/cooler) stored in a
 #' HDF5 data storage and converts them to an InteractionSet object for all
-#' detected pair of genomic bins with the counts of reads in these bin pairs
+#' detected pair of genomic bins with the counts of reads in these bin pairs.
+#' Reading and processing the files are done in parallel using mclapply from the
+#' parallel package and usually requires ~1Gb of RAM per core.
 #' 
-#' @param files A character vector of paths to HDF5 stored cool (uni-dimension)
+#' @param file.path The path to a HDF5 stored cool (uni-dimension)
 #' or mcool (multi-dimension sparse matrix). If using a multi-dimesion,
 #' the resolution of one of the dimension need to be passed to res.
+#' @param ... additional path file(s) to HDF5 stored cool (uni-dimension)
+#' or mcool (multi-dimension sparse matrix).
 #' @param res 'NULL' if using a uni-dimensional cool file or the resolution of one of layer in the mcool file
 #' @param cores An integer for the number of parallel thread to convert the file
 #'
@@ -216,8 +220,10 @@ read.cool <- function(file,res=NULL,chr1=NULL,start1=NULL,end1=NULL,chr2=NULL,st
 #' @import rhdf5
 #'
 #' @export
-cool2IntSet <- function(files, res=NULL, cores = detectCores() ) {
+cool2IntSet <- function(file.path, ..., res=NULL, cores = detectCores() ) {
 
+    files <- c(file.path,...)
+    
     anchors <- lapply(files,getBins,res)
     
     if (!(all(sapply(lapply(anchors[-1],seqinfo),identical,seqinfo(anchors[[1]]))))){
