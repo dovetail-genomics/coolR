@@ -18,6 +18,7 @@ seqinfo.cool <- function(file,res = NULL){
     s.i <- Seqinfo(seqnames = as.vector(h5read(file,name=paste(chr.group,'name',sep="/"))),
                    seqlengths = as.vector(h5read(file,name=paste(chr.group,'length',sep="/"))))
 
+    return(s.i)
 }
 
 #' Accessing the genomic bins in a cool/mcool file
@@ -47,6 +48,7 @@ getBins <- function(file,res = NULL){
                        IRanges(a.start,a.end),
                        seqinfo=s.i)
 
+    return(anchors)
 }
 
 getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
@@ -62,7 +64,8 @@ getSlice <- function(anchors,file,res,chr1,start1,end1,chr2,start2,end2){
     
     indexes <- list(chr=as.vector(h5read(file,name=paste(chr.group,'name',sep="/"))),
                     chr_idx=as.vector(h5read(file,name=paste(indexes.group,'chrom_offset',sep="/"))),
-                    bin1_idx=as.vector(h5read(file,name=paste(indexes.group,'bin1_offset',sep="/"))))
+                    bin1_idx=as.vector(h5read(file,name=paste(indexes.group,'bin1_offset',sep="/")))
+                    )
     
 ################################################################################
     ## Reading chromosome chunk If chr1 is null, return the full cool file
@@ -152,6 +155,7 @@ gi2is <- function(gi.counts,col.names) {
                            gi,
                            colData=lib.data)
     
+    return(data)
 }
 
 
